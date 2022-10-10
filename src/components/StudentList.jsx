@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 class StudentList extends Component {
     renderStudent = () => {
-        let listStudents = this.props.listStudentsSearch.length ? this.props.listStudentsSearch : this.props.listStudents
-        return listStudents.map((stu) => {
+        let listStudentRender = this.props.listStudentsSearch.length ? this.props.listStudentsSearch : this.props.listStudents
+        return listStudentRender.map((stu) => {
             return <tr key={stu.codeStudent}>
                 <td>{stu.codeStudent}</td>
                 <td>{stu.fullName}</td>
