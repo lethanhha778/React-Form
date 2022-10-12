@@ -3,16 +3,33 @@ import { connect } from 'react-redux';
 import Swal from 'sweetalert2'
 
 class FormAddStudent extends Component {
+    state = {
+        values: {
+            codeStudent: '',
+            fullName: '',
+            phone: '',
+            email: '',
+            password: '',
+            passwordConfirm: ''
+        },
+        errors: {
+            codeStudent: '',
+            fullName: '',
+            phone: '',
+            email: '',
+            password: '',
+            passwordConfirm: ''
+        }
+    }
     handleInputChange = (e) => {
         console.log(e.target.value)
         let { value, name } = e.target
-        let newStudent = { ...this.props.students.values, [name]: value }
-        let newErrors = { ...this.props.students.errors }
+        let newStudent = { ...this.state.values, [name]: value }
+        let newErrors = { ...this.state.errors }
         let error = ''
         if (value.trim() === '') {
             error = 'Dữ Liệu Ko Được Để Trống'
         }
-        console.log(this.props)
         if (name === 'codeStudent') {
             this.props.listStudents.some((stu) => {
                 if (stu.codeStudent === value) {
@@ -62,22 +79,15 @@ class FormAddStudent extends Component {
             }
         }
         newErrors[name] = error
-        let action = {
-            type: 'HANDLE_CHANGE',
-            student: {
-                values: newStudent,
-                errors: newErrors
-            }
-        }
-        this.props.dispatch(action)
-
+        this.setState({
+            values: newStudent,
+            errors: newErrors
+        })
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        let { values, errors } = this.props.students
+        let { values, errors } = this.state
         let isValid = true;
-
-
         for (const key in values) {
             if (values[key] === '') {
                 isValid = false
@@ -103,38 +113,43 @@ class FormAddStudent extends Component {
         }
         let action = {
             type: 'HANDLE_SUBMIT',
-            student: this.props.students.values,
+            student: this.state.values,
         }
         this.props.dispatch(action)
     }
 
+
+    componentWillReceiveProps(newProps) {
+        this.setState({
+            values: newProps.infoStudents
+        })
+    }
     render() {
-        let { codeStudent, fullName, phone, email, password, passwordConfirm } = this.props.students.values;
+        let { codeStudent, fullName, phone, email, password, passwordConfirm } = this.state.values;
         return (
             <div className="container-form mt-3">
-                <form 
-                onSubmit={ (e) => { this.handleSubmit(e)}}
-                    
-                    ref="form"
+                <form
+                    onSubmit={(e) => { this.handleSubmit(e) }}
                     className="signup"
-                    name='contact-form'
                 >
                     <div className="header">
-                        <h3 >Thông Tin Sinh Viên</h3>
+                        <h3 >Register Student</h3>
                     </div>
                     <div className="sep" />
                     <div className="inputs">
-                        <label htmlFor="">Mã SV</label>
+                        <label htmlFor="">Student Code</label>
                         <input onChange={(e) => {
                             this.handleInputChange(e)
                         }}
+                            id="stu"
                             value={codeStudent}
                             typeinput='code'
                             type="text"
                             name='codeStudent'
+
                         />
-                        <span className='text-danger'>{this.props.students.errors.codeStudent}</span>
-                        <label htmlFor="">Họ Tên</label>
+                        <span className='text-danger'>{this.state.errors.codeStudent}</span>
+                        <label htmlFor="">Full Name</label>
                         <input onChange={(e) => {
                             this.handleInputChange(e)
                         }}
@@ -143,8 +158,8 @@ class FormAddStudent extends Component {
                             type="text"
                             name='fullName'
                         />
-                        <span className='text-danger'>{this.props.students.errors.fullName}</span>
-                        <label htmlFor="">Số Điện Thoại</label>
+                        <span className='text-danger'>{this.state.errors.fullName}</span>
+                        <label htmlFor="">Phone Number</label>
                         <input onChange={(e) => {
                             this.handleInputChange(e)
                         }}
@@ -153,7 +168,7 @@ class FormAddStudent extends Component {
                             type="text"
                             name='phone'
                         />
-                        <span className='text-danger'>{this.props.students.errors.phone}</span>
+                        <span className='text-danger'>{this.state.errors.phone}</span>
                         <label htmlFor="">Email</label>
                         <input onChange={(e) => {
                             this.handleInputChange(e)
@@ -164,7 +179,7 @@ class FormAddStudent extends Component {
                             type="text"
                             name='email'
                         />
-                        <span className='text-danger'>{this.props.students.errors.email}</span>
+                        <span className='text-danger'>{this.state.errors.email}</span>
                         <div className='row'>
                             <div className="col-12 col-md-6 ">
                                 <label htmlFor="">Password</label>
@@ -176,7 +191,7 @@ class FormAddStudent extends Component {
                                     type="text"
                                     name='password'
                                 />
-                                <span className='text-danger'>{this.props.students.errors.password}</span>
+                                <span className='text-danger'>{this.state.errors.password}</span>
                             </div>
                             <div className="col-12 col-md-6 ">
                                 <label htmlFor="">Password Confirm</label>
@@ -188,7 +203,7 @@ class FormAddStudent extends Component {
                                     type="password"
                                     name='passwordConfirm'
                                 />
-                                <span className='text-danger'>{this.props.students.errors.passwordConfirm}</span>
+                                <span className='text-danger'>{this.state.errors.passwordConfirm}</span>
                             </div>
                         </div>
                         <div className="sep mt-1" />
@@ -196,28 +211,29 @@ class FormAddStudent extends Component {
                             <button onClick={() => {
                                 const action = {
                                     type: 'UPDATE_STU',
-                                    valueUpdate: this.props.students.values
+                                    valueUpdate: this.state.values
                                 }
                                 this.props.dispatch(action)
                             }}
                                 type='button'
-                                className='btn5-hover btn-update btn-add mt-3' >Cập Nhật</button>
+                                id='update'
+                                className='btn5-hover btn-update btn-add mt-3 update' >Cập Nhật</button>
                             <button
-
+                                id='addStu'
                                 className='btn5-hover btn5 btn-add mt-3' >Thêm Sinh Viên</button>
                         </div>
                     </div>
                 </form>
             </div>
-
         )
     }
 }
 
 const mapStateToProps = (rootReducer) => {
     return {
-        students: rootReducer.formReducer.students,
-        listStudents: rootReducer.formReducer.listStudents
+
+        listStudents: rootReducer.formReducer.listStudents,
+        infoStudents: rootReducer.formReducer.infoStudents,
     }
 }
 

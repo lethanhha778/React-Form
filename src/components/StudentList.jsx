@@ -1,35 +1,36 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+
 class StudentList extends Component {
     renderStudent = () => {
         let listStudentRender = this.props.listStudentsSearch.length ? this.props.listStudentsSearch : this.props.listStudents
-        return listStudentRender.map((stu) => {
-            return <tr key={stu.codeStudent}>
-                <td>{stu.codeStudent}</td>
-                <td>{stu.fullName}</td>
-                <td>{stu.phone}</td>
-                <td>{stu.email}</td>
-                <td>{stu.password}</td>
+        return listStudentRender.map((student) => {
+            return <tr key={student.codeStudent}>
+                <td>{student.codeStudent}</td>
+                <td>{student.fullName}</td>
+                <td>{student.phone}</td>
+                <td>{student.email}</td>
+                <td>{student.password}</td>
                 <td >
                     <button onClick={() => {
                         const action = {
                             type: 'VIEW_STU',
-                            student: stu
+                            student: student
                         }
                         this.props.dispatch(action)
                     }}
-                        className='btn5-hover btn5 btn-watch'>Xem
+                        className='btn5-hover btn5 btn-watch'>VIEW
                     </button>
                     <button
                         onClick={() => {
                             const action = {
                                 type: 'DELETE_STU',
-                                student: stu.codeStudent
+                                student: student.codeStudent
                             }
                             this.props.dispatch(action)
                         }}
                         className="button-warning">
-                        <span className="text">Xóa</span>
+                        <span className="text">DELETE</span>
                         <span>Yes?</span>
                     </button>
                 </td>
@@ -43,9 +44,8 @@ class StudentList extends Component {
             value: lowerCase
         }
         this.props.dispatch(action)
-
     }
-    submitSearch = (e)=>{
+    submitSearch = (e) => {
         e.preventDefault();
         const action = {
             type: 'SEARCH',
@@ -59,35 +59,34 @@ class StudentList extends Component {
             <div className='container mt-5'>
                 <div className="row">
                     <div className="col-12">
-                        <h2 className='text-center bg-dark text-light mb-3' >Chi Tiết Sinh Viên</h2>
-                        <form  onSubmit={(e) => { 
-                                this.submitSearch(e)
-                         }}
-                        className="text-end a" role="search">
+                        <h2 className='text-center bg-dark text-light mb-3 mt-5' >Student Details</h2>
+                        <form onSubmit={(e) => {
+                            this.submitSearch(e)
+                        }}
+                            className="text-end a" role="search">
                             <input onKeyUp={(e) => {
                                 this.handleInputSearch(e)
                             }}
-                                className="search me-2" type="text" placeholder="Search"  />
-                            <button 
+                                className="search me-2" type="text" placeholder="Search Name" />
+                            <button
                                 className="btn5-hover btn5 btn-search" >Search</button>
                         </form>
-                        <div className='table-responsive-xl'>
+                        <div className='table-responsive-xl' >
                             <table className="table table-dark table-striped-columns ">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Mã Sinh Viên</th>
-                                        <th scope="col">Họ Tên</th>
-                                        <th scope="col">Số Điện Thoại</th>
+                                        <th scope="col">Student Code </th>
+                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Phone Number</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Password</th>
-                                        <th></th>
+                                        <th className='td-btn'></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.renderStudent()}
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
