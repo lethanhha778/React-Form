@@ -5,7 +5,6 @@ body {
   overflow-x: hidden;
 }
 
-
 .btn5-hover {
   padding: 4px 10px;
   color: white;
@@ -47,15 +46,17 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
 }
-.update{
+
+.update {
   display: none;
 }
+
 .btn5-hover.btn-update {
   background-image: linear-gradient(to left,
-  #25aae1,
-  #4481eb,
-  #04befe,
-  #3f86ed);
+      #25aae1,
+      #4481eb,
+      #04befe,
+      #3f86ed);
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
 }
@@ -248,8 +249,9 @@ input[type=password]:focus {
   transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
 
 }
-.td-btn{
- width: 230px;
+
+.td-btn {
+  width: 230px;
 }
 
 @media screen and (max-width: 768px) {

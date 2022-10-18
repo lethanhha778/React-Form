@@ -12,13 +12,14 @@ class StudentList extends Component {
                 <td>{student.email}</td>
                 <td>{student.password}</td>
                 <td >
-                    <button onClick={() => {
-                        const action = {
-                            type: 'VIEW_STU',
-                            student: student
-                        }
-                        this.props.dispatch(action)
-                    }}
+                    <button
+                        onClick={() => {
+                            const action = {
+                                type: 'VIEW_STU',
+                                student: student
+                            }
+                            this.props.dispatch(action)
+                        }}
                         className='btn5-hover btn5 btn-watch'>VIEW
                     </button>
                     <button
@@ -60,14 +61,18 @@ class StudentList extends Component {
                 <div className="row">
                     <div className="col-12">
                         <h2 className='text-center bg-dark text-light mb-3 mt-5' >Student Details</h2>
-                        <form onSubmit={(e) => {
-                            this.submitSearch(e)
-                        }}
-                            className="text-end a" role="search">
-                            <input onKeyUp={(e) => {
-                                this.handleInputSearch(e)
+                        <form
+                            onSubmit={(e) => {
+                                this.submitSearch(e)
                             }}
-                                className="search me-2" type="text" placeholder="Search Name" />
+                            className="text-end a" role="search"
+                        >
+                            <input
+                                onKeyUp={(e) => {
+                                    this.handleInputSearch(e)
+                                }}
+                                className="search me-2" type="text" placeholder="Search Name"
+                            />
                             <button
                                 className="btn5-hover btn5 btn-search" >Search</button>
                         </form>

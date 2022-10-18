@@ -22,7 +22,6 @@ class FormAddStudent extends Component {
         }
     }
     handleInputChange = (e) => {
-        console.log(e.target.value)
         let { value, name } = e.target
         let newStudent = { ...this.state.values, [name]: value }
         let newErrors = { ...this.state.errors }
@@ -117,19 +116,19 @@ class FormAddStudent extends Component {
         }
         this.props.dispatch(action)
     }
-
-
     componentWillReceiveProps(newProps) {
         this.setState({
             values: newProps.infoStudents
         })
     }
+
     render() {
         let { codeStudent, fullName, phone, email, password, passwordConfirm } = this.state.values;
         return (
             <div className="container-form mt-3">
                 <form
                     onSubmit={(e) => { this.handleSubmit(e) }}
+                    id='form'
                     className="signup"
                 >
                     <div className="header">
@@ -138,9 +137,8 @@ class FormAddStudent extends Component {
                     <div className="sep" />
                     <div className="inputs">
                         <label htmlFor="">Student Code</label>
-                        <input onChange={(e) => {
-                            this.handleInputChange(e)
-                        }}
+                        <input
+                            onChange={(e) => { this.handleInputChange(e) }}
                             id="stu"
                             value={codeStudent}
                             typeinput='code'
@@ -150,9 +148,8 @@ class FormAddStudent extends Component {
                         />
                         <span className='text-danger'>{this.state.errors.codeStudent}</span>
                         <label htmlFor="">Full Name</label>
-                        <input onChange={(e) => {
-                            this.handleInputChange(e)
-                        }}
+                        <input
+                            onChange={(e) => { this.handleInputChange(e) }}
                             value={fullName}
                             typeinput='name'
                             type="text"
@@ -160,9 +157,8 @@ class FormAddStudent extends Component {
                         />
                         <span className='text-danger'>{this.state.errors.fullName}</span>
                         <label htmlFor="">Phone Number</label>
-                        <input onChange={(e) => {
-                            this.handleInputChange(e)
-                        }}
+                        <input
+                            onChange={(e) => { this.handleInputChange(e) }}
                             typeinput='phone'
                             value={phone}
                             type="text"
@@ -170,10 +166,8 @@ class FormAddStudent extends Component {
                         />
                         <span className='text-danger'>{this.state.errors.phone}</span>
                         <label htmlFor="">Email</label>
-                        <input onChange={(e) => {
-                            this.handleInputChange(e)
-
-                        }}
+                        <input
+                            onChange={(e) => { this.handleInputChange(e) }}
                             value={email}
                             typeinput='email'
                             type="text"
@@ -183,9 +177,8 @@ class FormAddStudent extends Component {
                         <div className='row'>
                             <div className="col-12 col-md-6 ">
                                 <label htmlFor="">Password</label>
-                                <input onChange={(e) => {
-                                    this.handleInputChange(e)
-                                }}
+                                <input
+                                    onChange={(e) => { this.handleInputChange(e) }}
                                     value={password}
                                     typeinput='pass'
                                     type="text"
@@ -195,10 +188,8 @@ class FormAddStudent extends Component {
                             </div>
                             <div className="col-12 col-md-6 ">
                                 <label htmlFor="">Password Confirm</label>
-                                <input onChange={(e) => {
-                                    this.handleInputChange(e)
-
-                                }}
+                                <input
+                                    onChange={(e) => { this.handleInputChange(e) }}
                                     value={passwordConfirm}
                                     type="password"
                                     name='passwordConfirm'
@@ -208,19 +199,24 @@ class FormAddStudent extends Component {
                         </div>
                         <div className="sep mt-1" />
                         <div className='btn-form'>
-                            <button onClick={() => {
-                                const action = {
-                                    type: 'UPDATE_STU',
-                                    valueUpdate: this.state.values
-                                }
-                                this.props.dispatch(action)
-                            }}
+                            <button
+                                onClick={() => {
+                                    const action = {
+                                        type: 'UPDATE_STU',
+                                        valueUpdate: this.state.values
+                                    }
+                                    this.props.dispatch(action)
+                                }}
                                 type='button'
                                 id='update'
-                                className='btn5-hover btn-update btn-add mt-3 update' >Cập Nhật</button>
+                                className='btn5-hover btn-update btn-add mt-3 update'
+                            >Cập Nhật
+                            </button>
                             <button
                                 id='addStu'
-                                className='btn5-hover btn5 btn-add mt-3' >Thêm Sinh Viên</button>
+                                className='btn5-hover btn5 btn-add mt-3'
+                            >Thêm Sinh Viên
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -231,7 +227,6 @@ class FormAddStudent extends Component {
 
 const mapStateToProps = (rootReducer) => {
     return {
-
         listStudents: rootReducer.formReducer.listStudents,
         infoStudents: rootReducer.formReducer.infoStudents,
     }

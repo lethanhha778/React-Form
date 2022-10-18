@@ -17,7 +17,6 @@ const initialState = {
 export const formReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'HANDLE_SUBMIT':
-
             state.listStudents = [...state.listStudents, action.student]
             return { ...state }
         case 'DELETE_STU':
@@ -29,17 +28,14 @@ export const formReducer = (state = initialState, action) => {
             document.getElementById('stu').setAttribute("disabled", true)
             document.getElementById('addStu').style.display = "none"
             document.getElementById('update').classList.remove("update")
-            // 
             state.infoStudents = action.student
             return { ...state }
         case 'UPDATE_STU':
-            console.log(state.infoStudents);
-
             let indexStu = state.listStudents.findIndex(stu => stu.codeStudent === action.valueUpdate.codeStudent)
             if (indexStu !== -1) {
                 state.infoStudents = state.listStudents[indexStu] = action.valueUpdate
             }
-            else{
+            else {
                 Swal.fire({
                     title: 'Có Thể Bạn Đã Xóa Dữ Liệu, Không Tìm Thấy Để Cập Nhật',
                     icon: 'error',
